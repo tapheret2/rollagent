@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rollagent"
+version = "0.1.0"
+description = "Optimistic rollups for AI agent actions — act (or declare) first, challenge within a window, then finalize."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Tap", email = "tapheret2@users.noreply.github.com" }]
+keywords = [
+  "ai-agents",
+  "optimistic-rollup",
+  "human-in-the-loop",
+  "agent-safety",
+  "challenge",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+  "typer>=0.12.0",
+  "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[project.scripts]
+rollagent = "rollagent.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/tapheret2/rollagent"
+Repository = "https://github.com/tapheret2/rollagent"
+Issues = "https://github.com/tapheret2/rollagent/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rollagent"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
