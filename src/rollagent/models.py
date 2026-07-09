@@ -106,3 +106,8 @@ class Challenge:
             resolved_at=row.get("resolved_at"),
             resolution_note=row.get("resolution_note"),
         )
+
+
+def is_terminal(status: str) -> bool:
+    """Return True if status is final or reverted."""
+    return str(status).lower() in {"final", "reverted", "finalized"}
