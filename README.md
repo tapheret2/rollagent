@@ -11,8 +11,10 @@ Confirm-every-step does not scale.
 Blind autonomy is unsafe.  
 **rollagent** is the middle path — the same idea as optimistic rollups, applied to agent side-effects.
 
+[![CI](https://github.com/tapheret2/rollagent/actions/workflows/ci.yml/badge.svg)](https://github.com/tapheret2/rollagent/actions/workflows/ci.yml)
 [![PyPI style](https://img.shields.io/badge/python-3.10%2B-blue)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Release](https://img.shields.io/badge/release-v0.1.0-blue)](https://github.com/tapheret2/rollagent/releases/tag/v0.1.0)
 [![Status](https://img.shields.io/badge/status-alpha-orange)](#)
 
 ---
@@ -134,9 +136,26 @@ action = eng.propose(
 
 ---
 
+## Demo (what you should see)
+
+```bash
+rollagent demo
+```
+
+Narrative path:
+
+1. Agent **proposes** a tip → `PENDING` (challenge window open)
+2. Human/bot **challenges** with evidence → `CHALLENGED`
+3. Challenge **accepted** → action **REVERTED** (never “published”)
+4. Happy path: no challenge → **FINAL**
+
+Use that as a mental model for any agent side-effect (tips, file writes, future webhooks).
+
+---
+
 ## Status
 
-**Alpha (v0.1)** — local SQLite state machine + CLI.  
+**Alpha [v0.1.0](https://github.com/tapheret2/rollagent/releases/tag/v0.1.0)** — local SQLite state machine + CLI.  
 Not a full agent framework. Not on-chain (yet).  
 The point is a **clear protocol** others can embed: `propose → challenge → finalize|revert`.
 
@@ -148,9 +167,11 @@ The point is a **clear protocol** others can embed: `propose → challenge → f
 - [ ] Optional content-addressed receipts / chain attest
 - [ ] Integrations (skill wrappers for common agent CLIs)
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) if you want to help.
+
 ---
 
-## Show HN / X one-liner
+## One-liner (X / Show HN)
 
 > Optimistic rollups for AI agents: actions go pending under a challenge window — intervene only when wrong, then finalize or revert.
 
@@ -160,4 +181,4 @@ The point is a **clear protocol** others can embed: `propose → challenge → f
 
 MIT — see [LICENSE](LICENSE).
 
-Built by [tapheret2](https://github.com/tapheret2).
+Built by [tapheret2](https://github.com/tapheret2) · not financial advice.
