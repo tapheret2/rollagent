@@ -254,6 +254,34 @@ def finalize(
 
 
 @app.command()
+def stats(
+    home: Optional[Path] = typer.Option(None, "--home"),
+    as_json: bool = typer.Option(False, "--json"),
+) -> None:
+    """Show action counts by status (pending/challenged/final/reverted)."""
+    eng = _engine(_home(home))
+    counts = eng.store.count_actions_by_status()
+    if as_json:
+        console.print_json(data=counts)
+        return
+    table = Table(title="rollagent stats", show_header=True, header_style="bold")
+    table.add_column("status")
+    table.add_column("count", justify="right")
+    total = 0
+    for status in ("pending", "challenged", "final", "reverted"):
+        n = int(counts.get(status, 0))
+        total += n
+        table.add_row(status, str(n))
+    # any unexpected statuses
+    for k, v in sorted(counts.items()):
+        if k not in {"pending", "challenged", "final", "reverted"}:
+            total += int(v)
+            table.add_row(k, str(v))
+    table.add_row("[bold]total[/bold]", f"[bold]{total}[/bold]")
+    console.print(table)
+
+
+@app.command()
 def tick(
     home: Optional[Path] = typer.Option(None, "--home"),
 ) -> None:

@@ -127,3 +127,9 @@ class Store:
 
     def open_challenges(self, action_id: str) -> list[Challenge]:
         return [c for c in self.list_challenges(action_id) if c.status.value == "open"]
+
+    def count_actions_by_status(self) -> dict[str, int]:
+        cur = self._conn.execute(
+            "SELECT status, COUNT(*) AS n FROM actions GROUP BY status"
+        )
+        return {str(row["status"]): int(row["n"]) for row in cur.fetchall()}
