@@ -349,3 +349,10 @@ class Engine:
             data = json.loads(receipt.read_text(encoding="utf-8"))
             data["reverted_at"] = iso(utcnow())
             receipt.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def age_seconds(created_iso: str, now: datetime | None = None) -> float:
+    """Seconds since an ISO timestamp (non-negative)."""
+    now = now or utcnow()
+    created = parse_iso(created_iso)
+    return max(0.0, (now - created).total_seconds())
