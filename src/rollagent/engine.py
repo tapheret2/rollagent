@@ -34,6 +34,17 @@ def new_id(prefix: str) -> str:
     return f"{prefix}_{uuid.uuid4().hex[:10]}"
 
 
+
+def seconds_until_finalize(finalizes_at: str, now: datetime | None = None) -> float:
+    """Seconds remaining until finalize (negative if past)."""
+    now = now or utcnow()
+    return (parse_iso(finalizes_at) - now).total_seconds()
+
+
+def is_past_finalize(finalizes_at: str, now: datetime | None = None) -> bool:
+    return seconds_until_finalize(finalizes_at, now=now) <= 0
+
+
 class EngineError(Exception):
     """Domain error with a short message for the CLI."""
 
