@@ -367,3 +367,17 @@ def age_seconds(created_iso: str, now: datetime | None = None) -> float:
     now = now or utcnow()
     created = parse_iso(created_iso)
     return max(0.0, (now - created).total_seconds())
+
+def clamp01(x: float) -> float:
+    return max(0.0, min(1.0, float(x)))
+
+
+def weighted_mean(values: list[float], weights: list[float]) -> float:
+    if len(values) != len(weights) or not values:
+        raise ValueError("values/weights length mismatch or empty")
+    if any(w < 0 for w in weights):
+        raise ValueError("weights must be >= 0")
+    s = sum(weights)
+    if s <= 0:
+        raise ValueError("sum(weights) must be > 0")
+    return sum(v * w for v, w in zip(values, weights)) / s
