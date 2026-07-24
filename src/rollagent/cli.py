@@ -379,3 +379,23 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+def softmax(xs: list[float]) -> list[float]:
+    import math
+    if not xs:
+        return []
+    m = max(xs)
+    exps = [math.exp(x - m) for x in xs]
+    s = sum(exps)
+    return [e / s for e in exps]
+
+
+def argmax(xs: list[float]) -> int:
+    if not xs:
+        raise ValueError("empty")
+    best_i, best_v = 0, xs[0]
+    for i, v in enumerate(xs):
+        if v > best_v:
+            best_i, best_v = i, v
+    return best_i
